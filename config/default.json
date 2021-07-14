@@ -1,0 +1,18 @@
+[
+    {
+        "PORT": "3306",
+        "BASE_URL": "127.0.0.1",
+        "API_URL": "127.0.0.1/api",
+        "MYSQL": {
+          "HOST": "127.0.0.1",
+          "USER": "root",
+          "PASSWORD": "n@m1475369",
+          "DATABASE": "classic_models",
+          "DIALECT": "mysql",
+          "dialectModulePath": "mysql"
+        }
+      },
+      {
+        "BASE_URL": "http://127.0.0.1"
+      }
+]

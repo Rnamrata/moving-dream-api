@@ -1,0 +1,42 @@
+{
+  "name": "node_demo",
+  "version": "1.0.0",
+  "main": "appServer.js",
+  "scripts": {
+    "start": "node appServer.js"
+  },
+  "author": "Namrata Roy",
+  "Date": "Jul-12-2021",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.6",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "enum": "^3.0.4",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "joi": "^17.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.8",
+    "mongoose": "^5.13.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "node": "^16.4.0",
+    "path": "^0.12.7",
+    "promise": "^8.1.0",
+    "request": "^2.88.2",
+    "underscore": "^1.13.1",
+    "uuid": "^3.4.0",
+    "vim": "^0.1.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
