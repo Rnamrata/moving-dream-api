@@ -3,6 +3,23 @@ const tokenExpireIn = require('../../../common/config/env.config').jwt_expiratio
 const crypto = require('crypto');
 jwt = require('jsonwebtoken');
 
+exports.otpEncryption = function (req, res, next) 
+{
+    console.log(req.body);
+    var otp = req.body.otp;
+    if(otp =="" || otp == undefined)
+    {
+        res.send({valid: false});
+    }
+    else
+    {
+        otp = otp.toString();
+        const hash = crypto.createHash('sha512', salt).update(otp).digest('base64');
+        // console.log('Hash: ', hash);
+        res.status(200).send({hash: hash});
+    }
+}
+
 exports.generateOtp = function (req, res, next) 
 {
     var valid = false;
@@ -17,25 +34,55 @@ exports.generateOtp = function (req, res, next)
     }
 }
 
-exports.otpEncryption = function (req, res) 
+exports.hashingPassword = function (req, res) 
 {
-    var otpCode = req.body.otpCode;
-    if(otpCode =="" || otpCode == undefined)
+    var password = req.body.password;
+    if(password =="" || password == undefined)
     {
         res.send({valid: false});
     }
     else
     {
-        otpCode = otpCode.toString();
-        const secret = 'AEYjGNIRVGEtKSIarg0zCMEzOoNsK';
-        // const salt = btoa(secret);
-        const salt = secret.toString('base64')
-        const hash = crypto.createHmac('sha512', salt).update(otpCode).digest('base64');
+        password = password.toString();
+        const salt = jwtSecret.toString('base64')
+        const hash = crypto.createHmac('sha512', salt).update(password).digest('base64');
         const keyHash = salt + '$' + hash;
         // console.log('keyHash: ', keyHash);
-        res.status(200).send({keyHash: keyHash});
+        res.status(200).send({hash: keyHash});
     }
 }
+
+exports.tokenVerify = (req, res) => 
+{
+    try 
+    {
+        var valid = false;
+        let userPassword = req.body.userPassword.toString();
+
+        if(userPassword =="" || userPassword == undefined)
+        {
+            res.send({valid:valid});
+        }
+        else
+        { 
+            const salt = jwtSecret.toString('base64');
+            const hash = crypto.createHmac('sha512', salt).update(userPassword).digest("base64");
+            const keyHash = salt + "$" + hash;
+          
+            if(keyHash === req.body.token)
+            {
+                valid = true;
+            }
+    
+            res.status(201).send({valid: valid});
+        }
+    } 
+    catch (err) 
+    {
+            res.status(500).send({errors: err});
+    }
+
+};
 
 exports.token = (req, res) => {
     try {
@@ -54,46 +101,11 @@ exports.token = (req, res) => {
 
 exports.refresh_token = (req, res) => {
     try 
-    {
-        
+    {        
         req.body = req.jwt;
         let token = jwt.sign(req.body, jwtSecret ,{ expiresIn:tokenExpire});
         res.status(201).send({id: token});
     } catch (err) {
         res.status(500).send({errors: err});
     }
-};
-
-
-exports.tokenVerify = (req, res) => 
-{
-    try 
-    {
-        var valid = false;
-        let userOTP = req.body.userOTP.toString();
-
-        if(userOTP =="" || userOTP == undefined)
-        {
-            res.send({valid:valid});
-        }
-        else
-        {
-            var secret = 'AEYjGNIRVGEtKSIarg0zCMEzOoNsK';   
-            let salt = secret.toString('base64');
-            let hash = crypto.createHmac('sha512', salt).update(userOTP).digest("base64");
-            var keyHash = salt + "$" + hash;
-          
-            if(keyHash === req.body.token)
-            {
-                valid = true;
-            }
-    
-            res.status(201).send({valid: valid});
-        }
-    } 
-    catch (err) 
-    {
-            res.status(500).send({errors: err});
-    }
-
 };

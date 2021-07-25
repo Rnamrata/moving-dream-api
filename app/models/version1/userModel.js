@@ -51,6 +51,33 @@ const getOtpByUserIdModel = function (value, result) {
     });
 }
 
+const getPasswordByUserNameModel = function (value, result) {
+    connection.createConnection.getConnection(function (err,sql)  
+    {
+        if (err) return result(new Error('Failed to connect mysql database '), null);
+
+        const GetPasswordByUserName = sqlQueryString.AllUserQuery.GetPasswordByUserName;
+        sql.query(GetPasswordByUserName, [value.userName, value.userType], function (err, res) 
+        {
+            if(err)
+            {
+                result(err,null);
+            }
+            else
+            {
+                if (res.length != 0) {
+                    result(null, res);
+                }
+                else {
+                    result(null, null);
+                }
+            }       
+        });
+        sql.release();
+    });
+}
+
+
 const getCustomerByNumberModel = function (value, result)
 {
     connection.createConnection.getConnection(function (err,sql)  
@@ -126,11 +153,80 @@ const insertUserLoginInfoModel = function (value, result) {
     });
 }
 
+const insertEmployeeInfoModel = function (value, result) {
+    connection.createConnection.getConnection(function (err,sql)  
+    {
+        if (err) return result(new Error('Failed to connect mysql database '), null);
+
+        const InsertUserInfoForEmployee = sqlQueryString.AllEmployeeQuery.InsertUserInfoForEmployee;
+        sql.query(InsertUserInfoForEmployee, [value.firstName, value.lastName, value.email], function (err, res) 
+        {
+            if(err)
+            {
+                result(err,null);
+            }
+            else
+            {
+                result(null, res);
+            }       
+        });
+        sql.release();
+    });
+}
+
+const insertCustomerInfoModel = function (value, result) {
+    connection.createConnection.getConnection(function (err,sql)  
+    {
+        if (err) return result(new Error('Failed to connect mysql database '), null);
+
+        const InsertUserInfoForCustomer = sqlQueryString.AllCustomerQuery.InsertUserInfoForCustomer;
+        sql.query(InsertUserInfoForCustomer, [`${value.firstName} ${value.lastName}`, value.contactFirst, value.contactLast, 
+            value.phone, value.addressLine1, value.addressLine2, value.city, value.state, value.postalCode, value.country], 
+            function (err, res) 
+        {
+            if(err)
+            {
+                result(err,null);
+            }
+            else
+            {
+                result(null, res);
+            }       
+        });
+        sql.release();
+    });
+}
+
+const insertUserPasswordInfoModel = function (value, result) {
+    connection.createConnection.getConnection(function (err,sql)  
+    {
+        if (err) return result(new Error('Failed to connect mysql database '), null);
+
+        const InsertUserPassword = sqlQueryString.AllUserQuery.InsertUserPassword;
+        sql.query(InsertUserPassword, [value.userId, value.userName, value.userType, value.hash], function (err, res) 
+        {
+            if(err)
+            {
+                result(err,null);
+            }
+            else
+            {
+                result(null, res);
+            }       
+        });
+        sql.release();
+    });
+}
+
 
 module.exports= {
     insertOtpLogModel,
     getOtpByUserIdModel,
+    getPasswordByUserNameModel,
     getCustomerByNumberModel,
     getEmployeeByNumberModel,
-    insertUserLoginInfoModel
+    insertUserLoginInfoModel,
+    insertEmployeeInfoModel,
+    insertCustomerInfoModel,
+    insertUserPasswordInfoModel
 };

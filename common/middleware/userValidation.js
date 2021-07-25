@@ -20,6 +20,26 @@ exports.insertOtpLog = (req, res) => {
     }
 };
 
+exports.insertOtpLog = (req, res) => {
+    if (req.body.otp)
+    {
+        UserModel.insertOtpLogModel(req.body, function(err, result)
+        {
+            if(err)
+            {
+                res.send(err);
+            }
+            else
+            {
+                return res.status(200).send(req.body);        
+            }
+        });
+    } else 
+    {
+        return res.status(400).send({errors: 'Missing user info.'});
+    }
+};
+
 exports.hasAuthValidFields = (req, res, next) => {
     let errors = [];
 
@@ -61,7 +81,7 @@ exports.validateUser = (req, res, next) =>
                         userId: req.body.userID,
                         userNumber: user[0].customer_number,
                         userType: user[0].user_type,
-                        userName : user[0].customer_name,
+                        // userName : user[0].customer_name,
                         phone:user[0].phone,
                     };
                     return next();
@@ -91,7 +111,7 @@ exports.validateUser = (req, res, next) =>
                         userId: req.body.userID,
                         userNumber: user[0].employee_number,
                         userType: user[0].user_type,
-                        userName : `${user[0].first_name} ${user[0].last_name}`,
+                        // userName : `${user[0].first_name} ${user[0].last_name}`,
                         // phone:user[0].phone,
                     };
                     return next();

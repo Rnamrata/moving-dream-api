@@ -3,6 +3,10 @@ const authController = require('../../controllers/version1/authController');
 
 const authRoute = function (app)
 {
+    app.post('/demoApi/hashingPassword',[
+        authController.hashingPassword
+    ]);
+
     app.post('/demoApi/generateOtp',[
         authController.generateOtp,
         VerifyUserMiddleware.insertOtpLog,

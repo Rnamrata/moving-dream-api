@@ -4,7 +4,7 @@ const userModel = require('../../models/version1/userModel');
 const baseUrlFile = require('../../../libs/helper/baseUrl');
 var request = require("request");
 
-exports.loginWithOtp = function(req, res)
+exports.loginWithPassword = function(req, res)
 {
   logger.info("Retriving data from API")
 
@@ -13,9 +13,9 @@ exports.loginWithOtp = function(req, res)
   var value = {};
 
   if(req.body) {
-    value.userId = req.body.userId;
+    value.userName = req.body.userName;
     value.userType = req.body.userType;
-    value.token = req.body.token;
+    value.userPassword = req.body.userPassword;
 
     status = bodyParamCheck.bodyValidationCheck(value);
     if(status != true)
@@ -24,7 +24,7 @@ exports.loginWithOtp = function(req, res)
         res.send(finalOutput);
     }
     else {
-        userModel.getOtpByUserIdModel(req.body, function(err, result)
+        userModel.getPasswordByUserNameModel(req.body, function(err, result)
         {
             if (err)
             {
@@ -36,16 +36,17 @@ exports.loginWithOtp = function(req, res)
                 {
                     finalOutput.status = 'failed';
                     finalOutput.errorMessage = 'No data found.';
-                    res.status(452).send(finalOutputult); 
+                    res.status(452).send(finalOutput); 
                 }
                 else 
                 {
+                    value.userId = result[0].user_id;
                     var options = { method: 'POST',
                         url: baseUrlFile.baseUrl + '/tokenVerify',
                         body:
                         {
-                            userOTP: result[0].otp_code,
-                            token: value.token
+                            userPassword: value.userPassword,
+                            token: result[0].hash
                         },
                         json: true 
                     };
@@ -53,7 +54,8 @@ exports.loginWithOtp = function(req, res)
                     {
                         if(error)
                         {
-                            let outPut = [{responseCode: '452', responseMessage: 'Wrong OTP'}] ;
+                            console.log("1");
+                            let outPut = [{responseCode: '452', responseMessage: 'Wrong Password'}] ;
                             res.status(452).send(JSON.stringify(outPut));
                         }
                         else
@@ -90,13 +92,16 @@ exports.loginWithOtp = function(req, res)
                                 }
                                 else
                                 {
-                                    let outPut = [{responseCode: '452', responseMessage: 'Wrong OTP'}] ;
+                            console.log("12");
+
+                                    let outPut = [{responseCode: '452', responseMessage: 'Wrong Password'}] ;
                                     res.status(452).send(JSON.stringify(outPut));
                                 }
                             }
                             else
                             {
-                                let outPut = [{responseCode: '452', responseMessage: 'Wrong OTP'}] ;
+                            console.log("123");
+                                let outPut = [{responseCode: '452', responseMessage: 'Wrong Password'}] ;
                                 res.status(452).send(JSON.stringify(outPut));
                             }
                         }
