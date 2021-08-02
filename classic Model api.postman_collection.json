@@ -1,0 +1,182 @@
+{
+	"variables": [],
+	"info": {
+		"name": "classic Model api",
+		"_postman_id": "dd310eec-0228-eb2d-ab94-da28ff3419d8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getOfficeDetails",
+			"request": {
+				"url": "http://localhost:9901/demoApi/version1/getOfficeDetails",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getOfficeDetailsByCode",
+			"request": {
+				"url": "http://localhost:9901/demoApi/version1/getOfficeDetailsByCode",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"officeCode\": 10\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "generateOtp",
+			"request": {
+				"url": "http://localhost:9901/demoApi/generateOtp",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": 1,\n\t\"userType\": \"employee\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "otpEncryption",
+			"request": {
+				"url": "http://localhost:9901/demoApi/otpEncryption",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"otpCode\": 3678\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "hashingPassword",
+			"request": {
+				"url": "http://localhost:9901/demoApi/hashingPassword",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"password\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "loginWithOtp",
+			"request": {
+				"url": "http://localhost:9901/demoApi/version1/loginWithOtp",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": 1,\n\t\"userType\": \"employee\",\n\t\"token\": \"AEYjGNIRVGEtKSIarg0zCMEzOoNsK$7Ff+OrEqYC0mCXJFMlVqg6NxY5DIpFe/bYqbIx2Sy7hprFt1RJOT5KtAC+d6t3xAY6TFRxYG1kWXuKCv5LVehw==\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "loginWithPassword",
+			"request": {
+				"url": "http://localhost:9901/demoApi/version1/loginWithPassword",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"Namrata\",\n\t\"userType\": \"customer\",\n\t\"userPassword\": \"password\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "insertLoginInfo",
+			"request": {
+				"url": "http://localhost:9901/demoApi/version1/insertLoginInfo",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": 1,\n\t\"userType\": \"employee\",\n\t\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJOdW1iZXIiOjEwMDIsInVzZXJUeXBlIjoiZW1wbG95ZWUiLCJ1c2VyTmFtZSI6IkRpYW5lIE11cnBoeSIsInJlZnJlc2hLZXkiOiI4Kzc5eGRYRGtUaHZlZTFRMWhrRk9RPT0iLCJpYXQiOjE2MjYxNjM2MjAsImV4cCI6MTYyNjMzNjQyMH0.alzMRcIS8PQTMJeQOCH5uyJUaMAcm9fWYteMwMyWhJI\",\n\t\"status\": \"online\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "insertUserInfo",
+			"request": {
+				"url": "http://localhost:9901/demoApi/version1/insertUserInfo",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"Namrata\",\n\t\"userType\": \"customer\",\n\t\"firstName\": \"Namrata\",\n    \"lastName\": \"Roy\",\n    \"password\": \"password\",\n    \"phone\": \"01750200589\",\n    \"contactFirst\": \"Jean\",\n    \"contactLast\": \"Nelson\",\n    \"addressLine1\": \"34/B\",\n    \"addressLine2\": \"16, Block: C, Road: 5\",\n    \"city\": \"Dhanmondi\",\n    \"state\": \"Dhaka\",\n    \"postalCode\": \"1200\",\n    \"country\": \"Bangladesh\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
