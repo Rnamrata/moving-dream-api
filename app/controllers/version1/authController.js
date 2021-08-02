@@ -14,6 +14,7 @@ exports.otpEncryption = function (req, res, next)
     else
     {
         otp = otp.toString();
+        const salt = jwtSecret.toString('base64')
         const hash = crypto.createHash('sha512', salt).update(otp).digest('base64');
         // console.log('Hash: ', hash);
         res.status(200).send({hash: hash});
