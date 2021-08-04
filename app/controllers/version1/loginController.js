@@ -54,7 +54,6 @@ exports.loginWithPassword = function(req, res)
                     {
                         if(error)
                         {
-                            console.log("1");
                             let outPut = [{responseCode: '452', responseMessage: 'Wrong Password'}] ;
                             res.status(452).send(JSON.stringify(outPut));
                         }
@@ -92,15 +91,12 @@ exports.loginWithPassword = function(req, res)
                                 }
                                 else
                                 {
-                            console.log("12");
-
                                     let outPut = [{responseCode: '452', responseMessage: 'Wrong Password'}] ;
                                     res.status(452).send(JSON.stringify(outPut));
                                 }
                             }
                             else
                             {
-                            console.log("123");
                                 let outPut = [{responseCode: '452', responseMessage: 'Wrong Password'}] ;
                                 res.status(452).send(JSON.stringify(outPut));
                             }
@@ -137,6 +133,8 @@ exports.insertLoginInfo = function(req, res)
         else {
             userModel.insertUserLoginInfoModel(value, function(err, result)
             {
+                console.log(err);
+                console.log(result);
                 if(err)
                 {
                     res.send(err);

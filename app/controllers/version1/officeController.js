@@ -1,3 +1,5 @@
+'use strict';
+
 const officeModel = require('../../models/version1/officeModel');
 const logger = require('../../../libs/helper/logger');
 const bodyParamCheck = require('../../../libs/helper/bodyParamCheck');

@@ -16,6 +16,6 @@
             toRange = totalRow;
         }
     }
-    return (fromRange +"-"+ toRange);
+    return ((fromRange + 1) +"-"+ toRange);
  }
 //module.exports = Paging;

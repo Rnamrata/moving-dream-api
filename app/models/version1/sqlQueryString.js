@@ -44,6 +44,18 @@ const AllUserQuery =
 
     'InsertUserPassword' : `INSERT INTO users_password (user_id, user_name, user_type, hash, create_time) VALUES (?, ?, ?, ?, now());`,   
 
+    'CheckUserLoginStatus' : `SELECT status FROM login_information WHERE user_id = ? AND user_type = ? ORDER BY login_id DESC LIMIT 1;`
+
+};
+
+const AllProductQuery = 
+{
+    'GetAllProduct' : `SELECT product_name, product_line, product_vendor, buy_price FROM products `,
+
+    'GetProductsByProductLine' : `SELECT product_name, product_line, product_vendor, buy_price FROM products 
+                WHERE product_line = ?;`,
+
+    'GetProductDetaisByProductId' : `SELECT * FROM products WHERE product_id = ?;`,
 };
 
 module.exports = 
@@ -51,5 +63,6 @@ module.exports =
     AllOfficeQuery,
     AllCustomerQuery,
     AllEmployeeQuery,
-    AllUserQuery
+    AllUserQuery,
+    AllProductQuery
 };

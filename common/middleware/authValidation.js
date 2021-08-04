@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken'),
 secret = require('../config/env.config.js').jwt_secret,
 crypto = require('crypto');
+const userAuth = require('../../app/models/version1/userAuthModel');
 
 exports.validJWTNeededNew = (req, res, next) => 
 {
@@ -26,43 +27,43 @@ exports.validJWTNeededNew = (req, res, next) =>
                     if(req.jwt.version == 2)
                     {
                         var err_msg_104 = {
-                            errorCode: "104",
-                            error_message: "Token from old login process"
+                            errorCode: '104',
+                            error_message: 'Token from old login process'
                         };
                 
                         return res.status(401).send(err_msg_104);
                     }
-                    // else
-                    // {
-                    //     shipperNewGetApiModel.checkLoginStatus(req.jwt, function (err, result) 
-                    //     {
-                    //         if(result.loginStatus == "alive" || loginFrom == "admin") 
-                    //         {                               
-                    //             return next();
-                    //         }
-                    //         else
-                    //         {
-                    //             let finalOutput = {error: 'auto logout, update'} ;
-                    //             return res.status(455).send(JSON.stringify(finalOutput));
-                    //         } 
-                    //     });
-                    // }
+                    else
+                    {
+                        userAuth.checkUserLoginStatus(req.jwt, function (err, result) 
+                        {
+                            if(result[0].status == 'online') 
+                            {                               
+                                return next();
+                            }
+                            else
+                            {
+                                let finalOutput = {error: 'user logged out, update login info'} ;
+                                return res.status(455).send(JSON.stringify(finalOutput));
+                            } 
+                        });
+                    }
                 }
-                // else 
-                // {
-                //     shipperNewGetApiModel.checkLoginStatus(req.jwt, function (err, result) 
-                //     {
-                //         if(result.loginStatus == "alive" || loginFrom == "admin") 
-                //         {
-                //             return next();
-                //         }
-                //         else
-                //         {
-                //             let finalOutput = {error: 'auto logout, update'} ;
-                //             return res.status(455).send(JSON.stringify(finalOutput));
-                //         } 
-                //     });
-                // }
+                else 
+                {
+                    userAuth.checkUserLoginStatus(req.jwt, function (err, result) 
+                    {
+                        if(result[0].status == 'online') 
+                        {                               
+                            return next();
+                        }
+                        else
+                        {
+                            let finalOutput = {error: 'user logged out, update login info'} ;
+                            return res.status(455).send(JSON.stringify(finalOutput));
+                        } 
+                    });
+                }
             }
 
         } 
