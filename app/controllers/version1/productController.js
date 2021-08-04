@@ -30,10 +30,12 @@ exports.getAllProducts = function(req, res)
 
     if (req.body) {
         if (req.body.productLine && req.body.productLine != '') {
-            queryParam = "WHERE product_line Like '%" + req.body.productLine + "%'" + queryParam;
+            var productLine = req.body.productLine.charAt(0).toUpperCase() + req.body.productLine.slice(1)
+            queryParam = "WHERE product_line Like '%" + productLine + "%'" + queryParam;
         }
         if (req.body.productName && req.body.productName != '') {
-            queryParam = "WHERE product_name Like '%" + req.body.productName + "%'" + queryParam;
+            var productName = req.body.productName.charAt(0).toUpperCase() + req.body.productName.slice(1)
+            queryParam = "WHERE product_name Like '%" + productName + "%'" + queryParam;
         }
 
     }
@@ -58,6 +60,7 @@ exports.getAllProducts = function(req, res)
             else 
             {
                 finalOutput.status = 'success';
+                finalOutput.totalData = result.length;
                 finalOutput.dataShowing = pagination.Paging(skip, limit, result.length);
                 finalOutput.response = result.slice(skip, (skip+limit));
                 res.send(finalOutput);
